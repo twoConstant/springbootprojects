@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: myblog
+
+  jpa:
+    hibernate:
+      ddl-auto: update  # ?????? ??? ?? ???? (??)
+    show-sql: true      # ??? SQL ??? ??
+    properties:
+      hibernate:
+        format_sql: true  # ?? ??? (??? ??)
+        use_sql_comments: true  # ??? ?? ?? (??? ?? ??)
+    logging:
+      level:
+        org:
+          hibernate:
+            SQL: DEBUG           # SQL ?? ?? ??
+            type:
+              descriptor: TRACE  # ?? ???? ?? ?? ??
+
+  sql:
+    init:
+      mode: never
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/myblog
+    username: root
+    password : "0000"
+    driver-class-name: com.mysql.cj.jdbc.Driver
