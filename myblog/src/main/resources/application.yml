@@ -4,7 +4,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
 #      none, validate, update, create, create-drop
     show-sql: true
     properties:
@@ -21,13 +21,14 @@ spring:
 
   sql:
     init:
-      mode: ALWAYS
+      mode: never
+  # SpringBoot 시작시 sql 고유 스크립트 수행 옵션
   #    ALWAYS,
   #    EMBEDDED,
   #    NEVER;
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/myblog
+    url: jdbc:mysql://127.0.0.1:3306/myblogbyjpa
     username: root
     password : "0000"
     driver-class-name: com.mysql.cj.jdbc.Driver
