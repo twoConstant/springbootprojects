@@ -18,11 +18,11 @@ import java.util.List;
 @RequestMapping("/tests")
 @RequiredArgsConstructor
 @Slf4j
-public class TestController {
+public class TestController implements TestDocs {
     
     private final TestService testService;
 
-    @GetMapping
+    @GetMapping()
     public List<Member> getAllMembers() {
         List<Member> members = testService.getAllMembers();
         return members;

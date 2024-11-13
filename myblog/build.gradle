@@ -29,6 +29,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 
+	// SpringDoc for api docs
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
 	// webflux for WebClient
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '3.3.5'
 
@@ -37,7 +40,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	// Object mapper : jackson-databind
-	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.18.1'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
 
 	// Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
