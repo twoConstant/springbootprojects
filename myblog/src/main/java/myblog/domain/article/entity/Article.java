@@ -36,8 +36,13 @@ public class Article {
     @Column(name = "writer", nullable = false, length = 50)
     private String writer;
 
+    @Builder.Default
     @Column(name = "star_count", nullable = false)
-    private Long starCount;
+    private Long starCount = 0L;
+
+    @Builder.Default
+    @Column(name = "view_count", nullable = false)
+    private Long viewCount = 0L;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
