@@ -14,7 +14,7 @@ import java.util.List;
 @RestController  // API 용입니다.
 @RequiredArgsConstructor   // 의존성 주입
 @RequestMapping("/members")    // 공통 url
-@Slf4j    // log용
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
