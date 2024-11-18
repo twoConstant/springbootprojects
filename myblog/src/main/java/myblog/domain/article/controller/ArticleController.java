@@ -1,15 +1,20 @@
 package myblog.domain.article.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import myblog.domain.article.dto.request.ArticleCreReqDto;
+import myblog.domain.article.dto.request.ArticlePutReqDto;
 import myblog.domain.article.dto.response.ArticleDetailResDto;
 import myblog.domain.article.dto.response.ArticleSummaryResDto;
 import myblog.domain.article.service.ArticleService;
-import myblog.domain.comment.dto.response.CommentAtArticleReqDto;
+import myblog.domain.comment.dto.request.CommentCreReqDto;
+import myblog.domain.comment.dto.request.CommentPutReqDto;
+import myblog.domain.comment.dto.request.ReplyCreReqDto;
+import myblog.domain.comment.dto.request.ReplyPutReqDto;
+import myblog.domain.comment.dto.response.CommentAtArticleResDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,10 +40,68 @@ public class ArticleController {
     }
 
     @GetMapping("/{articleId}/comments")
-    public ResponseEntity<List<CommentAtArticleReqDto>> getCommentAtArticle(
+    public ResponseEntity<List<CommentAtArticleResDto>> getCommentAtArticle(
             @PathVariable Long articleId
         ) {
-        List<CommentAtArticleReqDto> response = articleService.getArticleComments(articleId);
+        List<CommentAtArticleResDto> response = articleService.getArticleComments(articleId);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping()
+    public ResponseEntity<HttpStatus> postArticle(
+            @Valid @RequestBody ArticleCreReqDto request
+            ) {
+        articleService.postArticle(request);
+        return ResponseEntity.ok(HttpStatus.CREATED);
+
+    }
+
+    @PutMapping("/{articleId}")
+    public ResponseEntity<HttpStatus> putArticle(
+            @PathVariable Long articleId,
+            @Valid @RequestBody ArticlePutReqDto request
+            ) {
+        articleService.putArticle(request, articleId);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
+    // 부모 댓글 생성
+    @PostMapping("/{articleId}/comments")
+    public ResponseEntity<HttpStatus> postComment(
+            @PathVariable Long articleId,
+            @Valid @RequestBody CommentCreReqDto request
+            ) {
+        articleService.creComment(request, articleId);
+        return ResponseEntity.ok(HttpStatus.CREATED);
+    }
+
+    // 부모 댓글 수정
+    @PutMapping("/{articleId}/comments/{commentId}")
+    public ResponseEntity<HttpStatus> putComment(
+            @PathVariable Long commentId,
+            @Valid @RequestBody CommentPutReqDto request
+            ) {
+        articleService.putComment(request, commentId);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
+    // 대댓글 생성
+    @PostMapping("/{articleId}/comments/{commentId}")
+    public ResponseEntity<HttpStatus> creReply(
+            @PathVariable Long commentId,
+            @Valid @RequestBody ReplyCreReqDto request
+    ) {
+        articleService.creReply(request, commentId);
+        return ResponseEntity.ok(HttpStatus.CREATED);
+    }
+
+    // 대댓글 수정
+    @PutMapping("/{articleId}/comments/{commentId}/replies/{replyId}")
+    public ResponseEntity<HttpStatus> putReply(
+            @PathVariable Long replyId,
+            @Valid @RequestBody ReplyPutReqDto request
+            ) {
+        articleService.putReply(request, replyId);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 }

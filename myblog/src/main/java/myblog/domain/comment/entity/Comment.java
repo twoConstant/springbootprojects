@@ -3,6 +3,10 @@ package myblog.domain.comment.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import myblog.domain.article.entity.Article;
+import myblog.domain.comment.dto.request.CommentCreReqDto;
+import myblog.domain.comment.dto.request.CommentPutReqDto;
+import myblog.domain.comment.dto.request.ReplyCreReqDto;
+import myblog.domain.comment.dto.request.ReplyPutReqDto;
 import myblog.domain.user.entity.Users;
 
 import java.time.LocalDateTime;
@@ -14,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Getter
-@Setter
 @Table(name = "comments")
 public class Comment {
 
@@ -25,6 +28,9 @@ public class Comment {
     @Lob
     @Column(name = "content", nullable = false)
     private String content;
+
+    @Column(name = "writer", nullable = false)
+    private String writer;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -59,4 +65,31 @@ public class Comment {
         this.updatedAt = LocalDateTime.now();
     }
 
+    // Comment 관련 메서드
+    public static Comment creComment(CommentCreReqDto request, Article article) {
+        return Comment.builder()
+                .content(request.getContent())
+                .writer(request.getWriter())
+                .article(article)
+                .build();
+    }
+
+    public void updateCommentByCommentPutReqDto(CommentPutReqDto dto) {
+        this.writer = dto.getWriter();
+        this.content = dto.getContent();
+    }
+
+    // Reply 관련 메서드
+    public static Comment creReply(ReplyCreReqDto dto, Comment comment) {
+        return Comment.builder()
+                .writer(dto.getWriter())
+                .content(dto.getContent())
+                .parentComment(comment)
+                .build();
+    }
+
+    public void putReply(ReplyPutReqDto dto) {
+        this.writer = dto.getWriter();
+        this.content = dto.getContent();
+    }
 }

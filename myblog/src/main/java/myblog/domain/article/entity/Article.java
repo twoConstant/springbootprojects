@@ -2,6 +2,7 @@ package myblog.domain.article.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import myblog.domain.article.dto.request.ArticlePutReqDto;
 import myblog.domain.comment.entity.Comment;
 import myblog.domain.user.entity.Users;
 
@@ -15,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Getter
-@Setter
 @Table(name = "articles")
 public class Article {
 
@@ -68,6 +68,18 @@ public class Article {
     @PreUpdate
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public void updateArticleByArticlePutReqDto(ArticlePutReqDto dto) {
+        // 유효성 검사도 해당 객체 안에서 수행하는 것이 자연스럽다.
+        if(!this.password.equals(dto.getPassword_valid())) {
+            throw new IllegalArgumentException("비밀번호 유효성검사 fail");
+        }
+
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
+        this.password = dto.getPassword();
+        this.writer = dto.getWriter();
     }
 
 }
