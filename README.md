@@ -10,7 +10,7 @@
 
 ### FrontEnd
 
-- vue.js
+- React
 
 - node.js
 
