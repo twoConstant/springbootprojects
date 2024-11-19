@@ -17,7 +17,7 @@ public class ArticleDetailResDto {
     private String writer;
     private LocalDateTime createdAt;
     private Long viewCount;
-    private Long startCount;
+    private Long starCount;
 
     public static ArticleDetailResDto toDto(Article article) {
         return ArticleDetailResDto
@@ -28,7 +28,7 @@ public class ArticleDetailResDto {
                 .writer(article.getWriter())
                 .createdAt(article.getCreatedAt())
                 .viewCount(article.getViewCount())
-                .startCount(article.getStarCount())
+                .starCount(article.getStarCount())
                 .build();
     }
 }
