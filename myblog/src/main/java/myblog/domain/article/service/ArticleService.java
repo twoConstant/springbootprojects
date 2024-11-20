@@ -3,6 +3,7 @@ package myblog.domain.article.service;
 import myblog.domain.article.dto.request.ArticleCreReqDto;
 import myblog.domain.article.dto.request.ArticlePutReqDto;
 import myblog.domain.article.dto.response.ArticleDetailResDto;
+import myblog.domain.article.dto.response.ArticleIdResDto;
 import myblog.domain.article.dto.response.ArticleSummaryResDto;
 import myblog.domain.comment.dto.request.CommentCreReqDto;
 import myblog.domain.comment.dto.request.CommentPutReqDto;
@@ -20,7 +21,7 @@ public interface ArticleService {
 
     List<CommentAtArticleResDto> getArticleComments(Long id);
 
-    void postArticle(ArticleCreReqDto request);
+    ArticleIdResDto postArticle(ArticleCreReqDto request);
 
     void putArticle(ArticlePutReqDto request, Long id);
 

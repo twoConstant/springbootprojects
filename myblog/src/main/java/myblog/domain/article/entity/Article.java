@@ -82,4 +82,14 @@ public class Article {
         this.writer = dto.getWriter();
     }
 
+    // 조회수 증가 로직
+    public void plusViewCount() {
+        this.viewCount++;
+    }
+
+    // 추천수 증가 로직
+    public void plusStarCount() {
+        this.starCount++;
+    }
+
 }

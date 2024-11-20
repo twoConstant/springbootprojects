@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import myblog.domain.article.dto.request.ArticleCreReqDto;
 import myblog.domain.article.dto.request.ArticlePutReqDto;
 import myblog.domain.article.dto.response.ArticleDetailResDto;
+import myblog.domain.article.dto.response.ArticleIdResDto;
 import myblog.domain.article.dto.response.ArticleSummaryResDto;
 import myblog.domain.article.entity.Article;
 import myblog.domain.article.repository.ArticleRepository;
@@ -35,10 +36,11 @@ public class ArticleServiceV1 implements ArticleService {
     }
 
     @Override
+    @Transactional
     public ArticleDetailResDto getArticleDetail(Long id) {
-        return ArticleDetailResDto.toDto(
-                articleRepository.findById(id).orElseThrow()
-        );
+        Article article = articleRepository.findById(id).orElseThrow();
+        article.plusViewCount();
+        return ArticleDetailResDto.toDto(article);
     }
 
     @Override
@@ -55,8 +57,8 @@ public class ArticleServiceV1 implements ArticleService {
     @Override
     //FIXME 이것도 캡슐화를 해야하는가?
     @Transactional
-    public void postArticle(ArticleCreReqDto request) {
-        articleRepository.save(
+    public ArticleIdResDto postArticle(ArticleCreReqDto request) {
+        Article article = articleRepository.save(
                 Article
                         .builder()
                         .title(request.getTitle())
@@ -65,6 +67,9 @@ public class ArticleServiceV1 implements ArticleService {
                         .password(request.getPassword())
                         .build()
         );
+        return ArticleIdResDto.builder()
+                .id(article.getId())
+                .build();
     }
 
     @Override

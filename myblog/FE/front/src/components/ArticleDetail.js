@@ -9,13 +9,19 @@ const ArticleDetail = () => {
 
     // 버튼 클릭 시 ArticleList로 이동
     const handleGoBack = () => {
-        navigate("/"); // 
+        navigate("/articles"); // 
     };
+
+    // 버튼 클릭 시 ArticleEdit로 이동
+    const handleGoArticleEdit = (article_id) => {
+        navigate(`/articles/${article_id}/edit`)
+    }
 
 
 
     useEffect(() => {
         // ArticleList 컴포넌트 렌더링시 수행할 동작 정의 블럭
+        console.log("useEffect executed for article_id:", article_id);
         const fetchArticle = async () => {
             try {
                 const data = await getArticleDetailResDto(article_id); // API 호출
@@ -33,15 +39,16 @@ const ArticleDetail = () => {
 
     // article이 갱신이 안됐을때 (초기값이 null)
     if (!article) {
-        return <p>Loading...</p>;
+        return <p>로딩중...</p>;
     }
 
     return (
         <div>
             <h1>{article.title}</h1>
-            <p>Writer: {article.writer}</p>
-            <p>Content: {article.content}</p>
-            <p>Views: {article.viewCount}, Stars: {article.starCount}</p>
+            <p>작성자: {article.writer}</p>
+            <p>내용: {article.content}</p>
+            <p>조회수: {article.viewCount}, 추천수: {article.starCount}</p>
+            <button onClick={ () => handleGoArticleEdit(article_id)}>수정하기</button>
             <button onClick={handleGoBack}>돌아가기</button>
         </div>
         );

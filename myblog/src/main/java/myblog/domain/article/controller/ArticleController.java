@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import myblog.domain.article.dto.request.ArticleCreReqDto;
 import myblog.domain.article.dto.request.ArticlePutReqDto;
 import myblog.domain.article.dto.response.ArticleDetailResDto;
+import myblog.domain.article.dto.response.ArticleIdResDto;
 import myblog.domain.article.dto.response.ArticleSummaryResDto;
 import myblog.domain.article.service.ArticleService;
 import myblog.domain.comment.dto.request.CommentCreReqDto;
@@ -48,12 +49,11 @@ public class ArticleController {
     }
 
     @PostMapping()
-    public ResponseEntity<HttpStatus> postArticle(
+    public ResponseEntity<ArticleIdResDto> postArticle(
             @Valid @RequestBody ArticleCreReqDto request
             ) {
-        articleService.postArticle(request);
-        return ResponseEntity.ok(HttpStatus.CREATED);
-
+        ArticleIdResDto response = articleService.postArticle(request);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{articleId}")
