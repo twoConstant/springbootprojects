@@ -104,4 +104,13 @@ public class ArticleController {
         articleService.putReply(request, replyId);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
+
+    @PatchMapping("/{articleId}/stars/increment")
+    public ResponseEntity<HttpStatus> patchArticleStar(
+            @PathVariable Long articleId
+    ) {
+        articleService.patchArticleStar(articleId);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+
+    }
 }

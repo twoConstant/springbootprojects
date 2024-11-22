@@ -117,6 +117,13 @@ public class ArticleServiceV1 implements ArticleService {
         comment.putReply(request);
     }
 
+    @Override
+    @Transactional
+    public void patchArticleStar(Long articleId) {
+        Article article= articleRepository.findById(articleId).orElseThrow(IllegalArgumentException::new);
+        article.plusStarCount();
+    }
+
 }
 
 

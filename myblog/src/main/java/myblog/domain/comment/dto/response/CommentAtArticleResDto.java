@@ -15,7 +15,7 @@ public class CommentAtArticleResDto {
     private Long id;
     private String writer;
     private String content;
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
     private List<CommentDetailResDto> childComments;
 
     public static CommentAtArticleResDto toDto(
@@ -28,7 +28,7 @@ public class CommentAtArticleResDto {
                 .writer(parentComment.getWriter())
 //                .writer(parentComment.getUsers().getUserName())
                 .content(parentComment.getContent())
-                .createAt(parentComment.getCreatedAt())
+                .createdAt(parentComment.getCreatedAt())
                 .childComments(childComments.stream().map(CommentDetailResDto::toDto).toList())
                 .build();
     }

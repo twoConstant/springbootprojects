@@ -32,4 +32,6 @@ public interface ArticleService {
     void creReply(ReplyCreReqDto request, Long commentId);
 
     void putReply(ReplyPutReqDto request, Long replyId);
+
+    void patchArticleStar(Long articleId);
 }

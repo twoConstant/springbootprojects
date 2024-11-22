@@ -5,6 +5,7 @@ import ArticleList from './components/ArticlesList';
 import ArticleDetail from './components/ArticleDetail';
 import ArticleEdit from './components/ArticleEdit';
 import ArticleCre from './components/ArticleCre';
+import CommentCre from './components/CommentCre';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/articles/:article_id" element={<ArticleDetail />} />
         <Route path="/articles/:article_id/edit" element={<ArticleEdit />} />
         <Route path="/articles/create" element={<ArticleCre />} />
+        <Route path="/articles/:article_id/comment-cre" element={<CommentCre />} />
       </Routes>
     </Router>
   )
