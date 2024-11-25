@@ -95,3 +95,73 @@ button.danger {
     font-size: 14px;
     color: #555555;
 }
+
+/* 댓글 레이아웃 */
+.comment {
+    margin-bottom: 20px; /* 댓글 간격 */
+    border-bottom: 1px solid #ccc; /* 구분선 */
+    padding-bottom: 10px;
+}
+
+/* 댓글 헤더 */
+.comment-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 작성자와 내용 정렬 */
+}
+
+/* 작성자 스타일 */
+.comment-writer {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* 댓글 내용 및 버튼 */
+.comment-content-wrapper {
+    flex-grow: 1; /* 남는 공간 차지 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 댓글 내용 */
+.comment-content {
+    margin-right: 10px;
+    white-space: pre-wrap;
+}
+
+/* 수정 버튼 */
+.edit-button {
+    font-size: 0.9rem;
+    padding: 3px 6px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
+
+/* childComments 토글 버튼 */
+.toggle-button {
+    font-size: 0.9rem;
+    background-color: transparent;
+    color: #007bff;
+    border: none;
+    cursor: pointer;
+    padding: 3px 6px;
+}
+
+.toggle-button:hover {
+    text-decoration: underline;
+}
+
+/* childComments 컨테이너 */
+.child-comments {
+    margin-left: 20px;
+    padding-left: 10px;
+    border-left: 2px solid #ddd; /* 들여쓰기 구분선 */
+}

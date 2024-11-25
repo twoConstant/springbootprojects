@@ -58,13 +58,14 @@
 
 import React, { useEffect, useState } from "react";
 import { getArticleSummaryResDto } from "../api/articles_api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles.css"; // CSS 파일 import
 
 const ArticleList = () => {
     const [articles, setArticles] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -80,6 +81,10 @@ const ArticleList = () => {
 
         fetchArticles();
     }, []);
+
+    const handleGoArticleCre = () => {
+        navigate("/articles/create");
+    }
 
     return (
         <div className="container">
@@ -98,6 +103,7 @@ const ArticleList = () => {
             ) : (
                 !isLoading && !error && <p>게시글이 없습니다.</p>
             )}
+            <button onClick={handleGoArticleCre}>게시글 작성하기</button>
         </div>
     );
 };

@@ -5,10 +5,7 @@ import myblog.domain.article.dto.request.ArticlePutReqDto;
 import myblog.domain.article.dto.response.ArticleDetailResDto;
 import myblog.domain.article.dto.response.ArticleIdResDto;
 import myblog.domain.article.dto.response.ArticleSummaryResDto;
-import myblog.domain.comment.dto.request.CommentCreReqDto;
-import myblog.domain.comment.dto.request.CommentPutReqDto;
-import myblog.domain.comment.dto.request.ReplyCreReqDto;
-import myblog.domain.comment.dto.request.ReplyPutReqDto;
+import myblog.domain.comment.dto.request.*;
 import myblog.domain.comment.dto.response.CommentAtArticleResDto;
 
 import java.util.List;
@@ -34,4 +31,8 @@ public interface ArticleService {
     void putReply(ReplyPutReqDto request, Long replyId);
 
     void patchArticleStar(Long articleId);
+
+    void patchComment(Long commentId, CommentPatchReqDto request);
+
+    void patchArticleView(Long articleId);
 }

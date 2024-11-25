@@ -8,10 +8,7 @@ import myblog.domain.article.dto.response.ArticleIdResDto;
 import myblog.domain.article.dto.response.ArticleSummaryResDto;
 import myblog.domain.article.entity.Article;
 import myblog.domain.article.repository.ArticleRepository;
-import myblog.domain.comment.dto.request.CommentCreReqDto;
-import myblog.domain.comment.dto.request.CommentPutReqDto;
-import myblog.domain.comment.dto.request.ReplyCreReqDto;
-import myblog.domain.comment.dto.request.ReplyPutReqDto;
+import myblog.domain.comment.dto.request.*;
 import myblog.domain.comment.dto.response.CommentAtArticleResDto;
 import myblog.domain.comment.entity.Comment;
 import myblog.domain.comment.repository.CommentRepository;
@@ -39,7 +36,6 @@ public class ArticleServiceV1 implements ArticleService {
     @Transactional
     public ArticleDetailResDto getArticleDetail(Long id) {
         Article article = articleRepository.findById(id).orElseThrow();
-        article.plusViewCount();
         return ArticleDetailResDto.toDto(article);
     }
 
@@ -99,6 +95,8 @@ public class ArticleServiceV1 implements ArticleService {
         comment.updateCommentByCommentPutReqDto(request);
     }
 
+
+
     @Override
     @Transactional
     public void creReply(ReplyCreReqDto request, Long commentId) {
@@ -122,6 +120,20 @@ public class ArticleServiceV1 implements ArticleService {
     public void patchArticleStar(Long articleId) {
         Article article= articleRepository.findById(articleId).orElseThrow(IllegalArgumentException::new);
         article.plusStarCount();
+    }
+
+    @Override
+    @Transactional
+    public void patchComment(Long commentId, CommentPatchReqDto request) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(IllegalArgumentException::new);
+        comment.updateCommentByCommentPatchReqDto(request);
+    }
+
+    @Override
+    @Transactional
+    public void patchArticleView(Long articleId) {
+        Article article = articleRepository.findById(articleId).orElseThrow(IllegalArgumentException::new);
+        article.plusViewCount();
     }
 
 }

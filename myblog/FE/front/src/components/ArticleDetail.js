@@ -82,8 +82,8 @@
 
 // export default ArticleDetail;
 
-import React, { useEffect, useState } from "react";
-import { getArticleDetailResDto, patchArticleStar } from "../api/articles_api";
+import React, { useEffect, useState, useRef } from "react";
+import { getArticleDetailResDto, patchArticleStar, patchArticleVeiwCount } from "../api/articles_api";
 import { useParams, useNavigate } from "react-router-dom";
 import CommentsAtArticle from "./CommentsAtArticle";
 import "../styles.css";
@@ -92,6 +92,7 @@ const ArticleDetail = () => {
     const [article, setArticle] = useState(null);
     const { article_id } = useParams();
     const navigate = useNavigate();
+    const hasIncrementedView = useRef(false); // useRef는 컴포넌트 최상위에서 선언
 
     const handleGoBack = () => navigate("/articles");
     const handleGoArticleEdit = () => navigate(`/articles/${article_id}/edit`);
@@ -109,18 +110,26 @@ const ArticleDetail = () => {
         }
     };
 
+    // 게시글 데이터 로드 및 조회수 증가 처리
     useEffect(() => {
-        const fetchArticle = async () => {
+        const fetchDataAndIncrementView = async () => {
             try {
+                // 게시글 데이터 로드
                 const data = await getArticleDetailResDto(article_id);
                 setArticle(data);
+
+                // 조회수 증가 (한 번만 실행)
+                if (!hasIncrementedView.current) {
+                    hasIncrementedView.current = true; // 조회수 증가 처리 완료
+                    await patchArticleVeiwCount(article_id);
+                }
             } catch (error) {
-                console.error("Error fetching article:", error);
+                console.error("Error in fetching data or incrementing view count:", error);
             }
         };
 
-        fetchArticle();
-    }, [article_id]);
+        fetchDataAndIncrementView();
+    }, [article_id]); // article_id가 변경될 때만 실행
 
     if (!article) return <p>로딩중...</p>;
 

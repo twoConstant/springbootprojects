@@ -63,6 +63,21 @@ export const getCommentsAtArticleResDto = async(article_id) => {
     } catch (e) {
         console.log(e);
     }
-    
 }
 
+
+/**
+ * 목적 : 게시글 조회시 게시글 ViewCount++
+ * Method : Patch
+ * Path : /articles/{article_id}/views/increment
+ */
+export const patchArticleVeiwCount = async(article_id) => {
+    console.log("patchArticleVeiwCount 호출");
+    console.log("target article_id: " + article_id);
+    try {
+        await axiosInstance.patch(`/articles/${article_id}/views/increment`);
+    } catch(e) {
+        console.error("Patch 실패:", e);
+        throw new Error("patchArticleVeiwCount 호출과정에서 실패하였습니다."); // 호출부에서 처리하도록 에러 throw
+    }
+} 

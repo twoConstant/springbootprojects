@@ -8,10 +8,7 @@ import myblog.domain.article.dto.response.ArticleDetailResDto;
 import myblog.domain.article.dto.response.ArticleIdResDto;
 import myblog.domain.article.dto.response.ArticleSummaryResDto;
 import myblog.domain.article.service.ArticleService;
-import myblog.domain.comment.dto.request.CommentCreReqDto;
-import myblog.domain.comment.dto.request.CommentPutReqDto;
-import myblog.domain.comment.dto.request.ReplyCreReqDto;
-import myblog.domain.comment.dto.request.ReplyPutReqDto;
+import myblog.domain.comment.dto.request.*;
 import myblog.domain.comment.dto.response.CommentAtArticleResDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -85,6 +82,15 @@ public class ArticleController {
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 
+    @PatchMapping("/{articleId}/comments/{commentId}")
+    public ResponseEntity<HttpStatus> patchComment(
+            @PathVariable Long commentId,
+            @Valid @RequestBody CommentPatchReqDto request
+            ) {
+        articleService.patchComment(commentId, request);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
     // 대댓글 생성
     @PostMapping("/{articleId}/comments/{commentId}")
     public ResponseEntity<HttpStatus> creReply(
@@ -112,5 +118,13 @@ public class ArticleController {
         articleService.patchArticleStar(articleId);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
 
+    }
+
+    @PatchMapping("/{articleId}/views/increment")
+    public ResponseEntity<HttpStatus> patchArticleView(
+            @PathVariable Long articleId
+    ) {
+        articleService.patchArticleView(articleId);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 }

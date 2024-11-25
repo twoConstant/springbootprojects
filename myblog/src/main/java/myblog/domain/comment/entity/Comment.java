@@ -3,10 +3,7 @@ package myblog.domain.comment.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import myblog.domain.article.entity.Article;
-import myblog.domain.comment.dto.request.CommentCreReqDto;
-import myblog.domain.comment.dto.request.CommentPutReqDto;
-import myblog.domain.comment.dto.request.ReplyCreReqDto;
-import myblog.domain.comment.dto.request.ReplyPutReqDto;
+import myblog.domain.comment.dto.request.*;
 import myblog.domain.user.entity.Users;
 
 import java.time.LocalDateTime;
@@ -76,6 +73,10 @@ public class Comment {
 
     public void updateCommentByCommentPutReqDto(CommentPutReqDto dto) {
         this.writer = dto.getWriter();
+        this.content = dto.getContent();
+    }
+
+    public void updateCommentByCommentPatchReqDto(CommentPatchReqDto dto) {
         this.content = dto.getContent();
     }
 
