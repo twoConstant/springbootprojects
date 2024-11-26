@@ -11,39 +11,39 @@ import java.util.List;
 @Builder
 @Setter
 @Getter
-public class CommentAtArticleResDto {
+public class CommentListAtArticleResDto {
     private Long id;
     private String writer;
     private String content;
     private LocalDateTime createdAt;
-    private List<CommentDetailResDto> childComments;
+    private List<CommentResDto> childComments;
 
-    public static CommentAtArticleResDto toDto(
+    public static CommentListAtArticleResDto toDto(
             Comment parentComment,
             List<Comment> childComments
             ){
-        return CommentAtArticleResDto
+        return CommentListAtArticleResDto
                 .builder()
                 .id(parentComment.getId())
                 .writer(parentComment.getWriter())
 //                .writer(parentComment.getUsers().getUserName())
                 .content(parentComment.getContent())
                 .createdAt(parentComment.getCreatedAt())
-                .childComments(childComments.stream().map(CommentDetailResDto::toDto).toList())
+                .childComments(childComments.stream().map(CommentResDto::toDto).toList())
                 .build();
     }
 
     @Builder
     @Setter
     @Getter
-    private static class CommentDetailResDto {
+    private static class CommentResDto {
         private Long id;
         private String writer;
         private String content;
         private LocalDateTime createdAt;
 
-        public static CommentDetailResDto toDto(Comment comment) {
-            return CommentDetailResDto
+        public static CommentResDto toDto(Comment comment) {
+            return CommentResDto
                     .builder()
                     .id(comment.getId())
                     .writer(comment.getWriter())

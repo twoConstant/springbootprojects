@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor    // 기본 생성자
 @AllArgsConstructor
 @Builder
-public class ArticleCreReqDto {
+public class ArticleAddReqDto {
 
     @NotBlank(message = "Title cannot be blank")
     private String title;

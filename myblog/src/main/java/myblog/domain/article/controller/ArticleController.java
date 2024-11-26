@@ -2,14 +2,14 @@ package myblog.domain.article.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import myblog.domain.article.dto.request.ArticleCreReqDto;
-import myblog.domain.article.dto.request.ArticlePutReqDto;
-import myblog.domain.article.dto.response.ArticleDetailResDto;
+import myblog.domain.article.dto.request.ArticleAddReqDto;
+import myblog.domain.article.dto.request.ArticleUpdateReqDto;
 import myblog.domain.article.dto.response.ArticleIdResDto;
-import myblog.domain.article.dto.response.ArticleSummaryResDto;
+import myblog.domain.article.dto.response.ArticleListResDto;
+import myblog.domain.article.dto.response.ArticleResDto;
 import myblog.domain.article.service.ArticleService;
 import myblog.domain.comment.dto.request.*;
-import myblog.domain.comment.dto.response.CommentAtArticleResDto;
+import myblog.domain.comment.dto.response.CommentListAtArticleResDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,107 +24,105 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping()
-    public ResponseEntity<List<ArticleSummaryResDto>> getArticleSummary() {
-        List<ArticleSummaryResDto> response = articleService.getArticleSummary();
+    public ResponseEntity<List<ArticleListResDto>> articleList() {
+        List<ArticleListResDto> response = articleService.findArticleList();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{articleId}")
-    public ResponseEntity<ArticleDetailResDto> getArticleDetail(
-            @PathVariable Long articleId
-        ) {
-        ArticleDetailResDto response = articleService.getArticleDetail(articleId);
+    public ResponseEntity<ArticleResDto> articleDetail(@PathVariable Long articleId) {
+        ArticleResDto response = articleService.findArticleById(articleId);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{articleId}/comments")
-    public ResponseEntity<List<CommentAtArticleResDto>> getCommentAtArticle(
+    public ResponseEntity<List<CommentListAtArticleResDto>> commentList(
             @PathVariable Long articleId
         ) {
-        List<CommentAtArticleResDto> response = articleService.getArticleComments(articleId);
+        List<CommentListAtArticleResDto> response = articleService.findCommentListByArticleId(articleId);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping()
-    public ResponseEntity<ArticleIdResDto> postArticle(
-            @Valid @RequestBody ArticleCreReqDto request
+    public ResponseEntity<ArticleIdResDto> articleAdd(
+            @Valid @RequestBody ArticleAddReqDto request
             ) {
-        ArticleIdResDto response = articleService.postArticle(request);
+        ArticleIdResDto response = articleService.addArticle(request);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{articleId}")
-    public ResponseEntity<HttpStatus> putArticle(
+    public ResponseEntity<HttpStatus> articleUpdate(
             @PathVariable Long articleId,
-            @Valid @RequestBody ArticlePutReqDto request
+            @Valid @RequestBody ArticleUpdateReqDto request
             ) {
-        articleService.putArticle(request, articleId);
+        articleService.updateArticle(request, articleId);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 
     // 부모 댓글 생성
     @PostMapping("/{articleId}/comments")
-    public ResponseEntity<HttpStatus> postComment(
+    public ResponseEntity<HttpStatus> commentAdd(
             @PathVariable Long articleId,
-            @Valid @RequestBody CommentCreReqDto request
+            @Valid @RequestBody CommentAddReqDto request
             ) {
-        articleService.creComment(request, articleId);
+        articleService.addComment(request, articleId);
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
     // 부모 댓글 수정
     @PutMapping("/{articleId}/comments/{commentId}")
-    public ResponseEntity<HttpStatus> putComment(
+    public ResponseEntity<HttpStatus> commentUpdate(
             @PathVariable Long commentId,
-            @Valid @RequestBody CommentPutReqDto request
+            @Valid @RequestBody CommentUpdateReqDto request
             ) {
-        articleService.putComment(request, commentId);
+        articleService.updateComment(request, commentId);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 
     @PatchMapping("/{articleId}/comments/{commentId}")
-    public ResponseEntity<HttpStatus> patchComment(
+    public ResponseEntity<HttpStatus> commentModify(
             @PathVariable Long commentId,
-            @Valid @RequestBody CommentPatchReqDto request
+            @Valid @RequestBody CommentModifyReqDto request
             ) {
-        articleService.patchComment(commentId, request);
+        articleService.modifyComment(commentId, request);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 
     // 대댓글 생성
     @PostMapping("/{articleId}/comments/{commentId}")
-    public ResponseEntity<HttpStatus> creReply(
+    public ResponseEntity<HttpStatus> replyAdd(
             @PathVariable Long commentId,
-            @Valid @RequestBody ReplyCreReqDto request
+            @Valid @RequestBody ReplyAddReqDto request
     ) {
-        articleService.creReply(request, commentId);
+        articleService.addReply(request, commentId);
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
     // 대댓글 수정
     @PutMapping("/{articleId}/comments/{commentId}/replies/{replyId}")
-    public ResponseEntity<HttpStatus> putReply(
+    public ResponseEntity<HttpStatus> replyUpdate(
             @PathVariable Long replyId,
-            @Valid @RequestBody ReplyPutReqDto request
+            @Valid @RequestBody ReplyUpdateReqDto request
             ) {
-        articleService.putReply(request, replyId);
+        articleService.updateReply(request, replyId);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 
     @PatchMapping("/{articleId}/stars/increment")
-    public ResponseEntity<HttpStatus> patchArticleStar(
+    public ResponseEntity<HttpStatus> articleStarIncrement(
             @PathVariable Long articleId
     ) {
-        articleService.patchArticleStar(articleId);
+        articleService.incrementArticleStar(articleId);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
 
     }
 
     @PatchMapping("/{articleId}/views/increment")
-    public ResponseEntity<HttpStatus> patchArticleView(
+    public ResponseEntity<HttpStatus> articleViewIncrement(
             @PathVariable Long articleId
     ) {
-        articleService.patchArticleView(articleId);
+        articleService.incrementArticleView(articleId);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ArticleCreReqDto from "../dto/article/request/ArticleCreReqDto";
 import { useNavigate } from "react-router-dom";
-import { postArticleCre } from "../api/articles_api";
+import { postArticle } from "../api/articles_api";
 
 const ArticleCre = () => {
     // 변수 선언
@@ -44,7 +44,7 @@ const ArticleCre = () => {
 
         // api호출하기
         try {
-            const data = await postArticleCre(request);
+            const data = await postArticle(request);
             const article_id = data.id;
             console.log("response article_id: " + article_id );
             navigate(`/articles/${article_id}`);

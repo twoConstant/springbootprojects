@@ -1,5 +1,5 @@
 // import React, { useEffect, useState } from "react";
-// import { getArticleSummaryResDto } from "../api/articles_api";
+// import { getArticleList } from "../api/articles_api";
 // import { Link } from "react-router-dom";
 
 // const ArticleList = () => {
@@ -11,7 +11,7 @@
 //     useEffect(() => {
 //         const fetchArticles = async () => {
 //             try {
-//                 const data = await getArticleSummaryResDto(); // API 호출
+//                 const data = await getArticleList(); // API 호출
 //                 console.log("Fetched articles:", data); // 데이터 확인
 //                 setArticles(data); // 상태 업데이트
 //             } catch (error) {
@@ -57,7 +57,7 @@
 // export default ArticleList;
 
 import React, { useEffect, useState } from "react";
-import { getArticleSummaryResDto } from "../api/articles_api";
+import { getArticleList } from "../api/articles_api";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles.css"; // CSS 파일 import
 
@@ -70,7 +70,7 @@ const ArticleList = () => {
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const data = await getArticleSummaryResDto();
+                const data = await getArticleList();
                 setArticles(data);
             } catch (error) {
                 setError("게시글을 가져오는 데 실패했습니다.");

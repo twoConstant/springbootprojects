@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import CommentCreReqDto from "../dto/comment/request/CommentCreReqDto";
-import { postCommentCreReqDto } from "../api/comment_api";
+import CommentAddReqDto from "../dto/comment/request/CommentAddReqDto";
+import { postComment } from "../api/comment_api";
 
 const CommentCre = () => {
     // 변수 선언
@@ -34,12 +34,12 @@ const CommentCre = () => {
             return;
         }
 
-        // CommentCreReqDto 객체 생성
-        const commentCreReqDto = new CommentCreReqDto(content, writer);
+        // commentAddReqDto 객체 생성
+        const commentAddReqDto = new CommentAddReqDto(content, writer);
 
         // api호출하기
         try {
-            postCommentCreReqDto(article_id, commentCreReqDto);
+            postComment(article_id, commentAddReqDto);
             navigate(`/articles/${article_id}`);
         } catch (error) {
             console.error("Error creating article:", error);

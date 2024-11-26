@@ -63,7 +63,7 @@ public class Comment {
     }
 
     // Comment 관련 메서드
-    public static Comment creComment(CommentCreReqDto request, Article article) {
+    public static Comment creComment(CommentAddReqDto request, Article article) {
         return Comment.builder()
                 .content(request.getContent())
                 .writer(request.getWriter())
@@ -71,17 +71,17 @@ public class Comment {
                 .build();
     }
 
-    public void updateCommentByCommentPutReqDto(CommentPutReqDto dto) {
+    public void updateCommentByCommentPutReqDto(CommentUpdateReqDto dto) {
         this.writer = dto.getWriter();
         this.content = dto.getContent();
     }
 
-    public void updateCommentByCommentPatchReqDto(CommentPatchReqDto dto) {
+    public void updateCommentByCommentPatchReqDto(CommentModifyReqDto dto) {
         this.content = dto.getContent();
     }
 
     // Reply 관련 메서드
-    public static Comment creReply(ReplyCreReqDto dto, Comment comment) {
+    public static Comment creReply(ReplyAddReqDto dto, Comment comment) {
         return Comment.builder()
                 .writer(dto.getWriter())
                 .content(dto.getContent())
@@ -89,7 +89,7 @@ public class Comment {
                 .build();
     }
 
-    public void putReply(ReplyPutReqDto dto) {
+    public void putReply(ReplyUpdateReqDto dto) {
         this.writer = dto.getWriter();
         this.content = dto.getContent();
     }

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getArticleDetailResDto, putArticle } from "../api/articles_api"; // API 호출 함수
-import ArticleEditReqDto from "../dto/article/request/ArticleEditReqDto"
+import { getArticle, putArticle } from "../api/articles_api"; // API 호출 함수
+import ArticleEditReqDto from "../dto/article/request/ArticleEditReqDto";
+
 
 
 const ArticleEdit = () => {
@@ -22,7 +23,7 @@ const ArticleEdit = () => {
     useEffect(() => {
         const fetchArticle = async () => {
             try {
-                const data = await getArticleDetailResDto(article_id);
+                const data = await getArticle(article_id);
                 setArticle(data);
             } catch (error) {
                 console.error("Error fetching article:", error);
@@ -54,22 +55,17 @@ const ArticleEdit = () => {
             return;
         }
 
-        const request = new ArticleEditReqDto(
+        const articleEditReqDto = new ArticleEditReqDto(
             article.title,
             article.writer,
             article.content,
             article.password,
-            passwordValid,
-        );
+            article.passwordValid
+        )
 
-        try {
-            await putArticle(article_id, request);
-            setErrorMessage(""); // 성공 시 에러 메시지 초기화
-            navigate(`/articles/${article_id}`);
-        } catch (error) {
-            console.error("Error updating article:", error);
-            setErrorMessage("Failed to update article.");
-        }
+        await putArticle(article_id, articleEditReqDto);
+        navigate(`/articles/${article_id}`);
+
     };
 
     const handleGoBack = (article_id) => {

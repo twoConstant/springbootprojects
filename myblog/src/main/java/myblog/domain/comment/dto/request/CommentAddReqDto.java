@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReplyCreReqDto {
+public class CommentAddReqDto {
+
     @NotBlank(message = "content can not be blank")
     private String content;
 

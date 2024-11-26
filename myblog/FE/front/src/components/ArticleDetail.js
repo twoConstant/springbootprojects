@@ -1,5 +1,5 @@
 // import React, { useEffect, useState } from "react";
-// import { getArticleDetailResDto, patchArticleStar } from "../api/articles_api";
+// import { getArticle, patchArticleStar } from "../api/articles_api";
 // import { useParams, useNavigate } from "react-router-dom";
 // import CommentsAtArticle from "./CommentsAtArticle";
 
@@ -46,7 +46,7 @@
 //         console.log("useEffect executed for article_id:", article_id);
 //         const fetchArticle = async () => {
 //             try {
-//                 const data = await getArticleDetailResDto(article_id); // API 호출
+//                 const data = await getArticle(article_id); // API 호출
 //                 console.log("Fetched article:", data); // 데이터 확인
 //                 setArticle(data); // 상태 업데이트
 //             } catch (error) {
@@ -83,7 +83,7 @@
 // export default ArticleDetail;
 
 import React, { useEffect, useState, useRef } from "react";
-import { getArticleDetailResDto, patchArticleStar, patchArticleVeiwCount } from "../api/articles_api";
+import { getArticle, patchArticleStar, patchArticleVeiwCount } from "../api/articles_api";
 import { useParams, useNavigate } from "react-router-dom";
 import CommentsAtArticle from "./CommentsAtArticle";
 import "../styles.css";
@@ -115,7 +115,7 @@ const ArticleDetail = () => {
         const fetchDataAndIncrementView = async () => {
             try {
                 // 게시글 데이터 로드
-                const data = await getArticleDetailResDto(article_id);
+                const data = await getArticle(article_id);
                 setArticle(data);
 
                 // 조회수 증가 (한 번만 실행)

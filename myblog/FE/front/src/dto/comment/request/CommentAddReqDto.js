@@ -1,5 +1,5 @@
 
-class CommentCreReqDto {
+class CommentAddReqDto {
 
     content = "";
     writer = "";
@@ -10,4 +10,4 @@ class CommentCreReqDto {
     }
 }
 
-export default CommentCreReqDto;
+export default CommentAddReqDto;

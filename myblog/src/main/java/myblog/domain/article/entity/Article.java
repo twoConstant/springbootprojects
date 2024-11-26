@@ -2,7 +2,7 @@ package myblog.domain.article.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import myblog.domain.article.dto.request.ArticlePutReqDto;
+import myblog.domain.article.dto.request.ArticleUpdateReqDto;
 import myblog.domain.comment.entity.Comment;
 import myblog.domain.user.entity.Users;
 
@@ -70,7 +70,7 @@ public class Article {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void updateArticleByArticlePutReqDto(ArticlePutReqDto dto) {
+    public void updateArticleByArticlePutReqDto(ArticleUpdateReqDto dto) {
         // 유효성 검사도 해당 객체 안에서 수행하는 것이 자연스럽다.
         if(!this.password.equals(dto.getPassword_valid())) {
             throw new IllegalArgumentException("비밀번호 유효성검사 fail");

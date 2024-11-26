@@ -2,32 +2,38 @@ import CommentAtArticleResDto from "../dto/article/response/CommentAtArticleResD
 import axiosInstance from "./axiosInstance"
 
 // 게시글 전체 목록 조회
-export const getArticleSummaryResDto = async() => {
-    console.log("in getArticleSummaryResDto");
+export const getArticleList = async() => {
+    console.log("in getArticleList");
     try {
         const response = await axiosInstance.get("/articles");
         return response.data;
     } catch (error) {
         console.log("error");
     }
-    
 }
 
 // 단일 게시글 조회 요청
-export const getArticleDetailResDto = async(article_id) => {
+export const getArticle = async(article_id) => {
     const response = await axiosInstance.get(`/articles/${article_id}`);
     return response.data;
 }
 
 // 게시글 생성 요청
-export const postArticleCre = async(request) => {
+export const postArticle = async(request) => {
     const response = await axiosInstance.post(`/articles`, request);
     return response.data;
 }
 
 // 게시글 수정 요청
-export const putArticle = async(article_id, request) => {
-    await axiosInstance.put(`/articles/${article_id}`, request);
+export const putArticle = async(article_id, articleEditReqDto) => {
+
+    try {
+        await axiosInstance.put(`/articles/${article_id}`, articleEditReqDto);
+    } catch (e) {
+        console.error("putArticle 실패:", e);
+        throw new Error("putArticle 호출과정에서 실패하였습니다."); // 호출부에서 처리하도록 에러 throw
+    }
+    
 }
 
 // 게시글 추천 클릭
@@ -42,7 +48,7 @@ export const patchArticleStar = async(article_id) => {
 
 
 // 단일 게시글 전체 댓글 조회
-export const getCommentsAtArticleResDto = async(article_id) => {
+export const getCommentListAtArticle = async(article_id) => {
     try {
         const response = await axiosInstance.get(`/articles/${article_id}/comments`);
         const data = response.data;

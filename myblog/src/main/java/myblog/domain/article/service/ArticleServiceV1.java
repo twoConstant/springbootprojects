@@ -1,15 +1,15 @@
 package myblog.domain.article.service;
 
 import lombok.RequiredArgsConstructor;
-import myblog.domain.article.dto.request.ArticleCreReqDto;
-import myblog.domain.article.dto.request.ArticlePutReqDto;
-import myblog.domain.article.dto.response.ArticleDetailResDto;
+import myblog.domain.article.dto.request.ArticleAddReqDto;
+import myblog.domain.article.dto.request.ArticleUpdateReqDto;
 import myblog.domain.article.dto.response.ArticleIdResDto;
-import myblog.domain.article.dto.response.ArticleSummaryResDto;
+import myblog.domain.article.dto.response.ArticleListResDto;
+import myblog.domain.article.dto.response.ArticleResDto;
 import myblog.domain.article.entity.Article;
 import myblog.domain.article.repository.ArticleRepository;
 import myblog.domain.comment.dto.request.*;
-import myblog.domain.comment.dto.response.CommentAtArticleResDto;
+import myblog.domain.comment.dto.response.CommentListAtArticleResDto;
 import myblog.domain.comment.entity.Comment;
 import myblog.domain.comment.repository.CommentRepository;
 import org.springframework.stereotype.Service;
@@ -27,25 +27,25 @@ public class ArticleServiceV1 implements ArticleService {
     private final CommentRepository commentRepository;
 
     @Override
-    public List<ArticleSummaryResDto> getArticleSummary() {
+    public List<ArticleListResDto> findArticleList() {
         return articleRepository.findAll()
-                .stream().map(ArticleSummaryResDto::toDto).toList();
+                .stream().map(ArticleListResDto::toDto).toList();
     }
 
     @Override
     @Transactional
-    public ArticleDetailResDto getArticleDetail(Long id) {
+    public ArticleResDto findArticleById(Long id) {
         Article article = articleRepository.findById(id).orElseThrow();
-        return ArticleDetailResDto.toDto(article);
+        return ArticleResDto.toDto(article);
     }
 
     @Override
     //FIXME JPQL로 수정
-    public List<CommentAtArticleResDto> getArticleComments(Long id) {
-        List<CommentAtArticleResDto> response = new ArrayList<>();
+    public List<CommentListAtArticleResDto> findCommentListByArticleId(Long id) {
+        List<CommentListAtArticleResDto> response = new ArrayList<>();
         for (Comment parentComment : commentRepository.findByArticle_IdAndParentCommentIsNull(id)) {
             List<Comment> childComments = parentComment.getChildComments();
-            response.add(CommentAtArticleResDto.toDto(parentComment, childComments));
+            response.add(CommentListAtArticleResDto.toDto(parentComment, childComments));
         }
         return response;
     }
@@ -53,7 +53,7 @@ public class ArticleServiceV1 implements ArticleService {
     @Override
     //FIXME 이것도 캡슐화를 해야하는가?
     @Transactional
-    public ArticleIdResDto postArticle(ArticleCreReqDto request) {
+    public ArticleIdResDto addArticle(ArticleAddReqDto request) {
         Article article = articleRepository.save(
                 Article
                         .builder()
@@ -70,7 +70,7 @@ public class ArticleServiceV1 implements ArticleService {
 
     @Override
     @Transactional
-    public void putArticle(ArticlePutReqDto request, Long id) {
+    public void updateArticle(ArticleUpdateReqDto request, Long id) {
         Article article = articleRepository.findById(id).orElseThrow(() ->
                 new NoSuchElementException("None content with summit id"));
         article.updateArticleByArticlePutReqDto(request);
@@ -79,7 +79,7 @@ public class ArticleServiceV1 implements ArticleService {
 
     @Override
     @Transactional
-    public void creComment(CommentCreReqDto request, Long articleId) {
+    public void addComment(CommentAddReqDto request, Long articleId) {
         commentRepository.save(
                 Comment.creComment(
                         request,
@@ -90,7 +90,7 @@ public class ArticleServiceV1 implements ArticleService {
 
     @Override
     @Transactional
-    public void putComment(CommentPutReqDto request, Long commentId) {
+    public void updateComment(CommentUpdateReqDto request, Long commentId) {
         Comment comment = commentRepository.findById(commentId).orElseThrow();
         comment.updateCommentByCommentPutReqDto(request);
     }
@@ -99,7 +99,7 @@ public class ArticleServiceV1 implements ArticleService {
 
     @Override
     @Transactional
-    public void creReply(ReplyCreReqDto request, Long commentId) {
+    public void addReply(ReplyAddReqDto request, Long commentId) {
         commentRepository.save(
                 Comment.creReply(
                         request,
@@ -110,28 +110,28 @@ public class ArticleServiceV1 implements ArticleService {
 
     @Override
     @Transactional
-    public void putReply(ReplyPutReqDto request, Long replyId) {
+    public void updateReply(ReplyUpdateReqDto request, Long replyId) {
         Comment comment = commentRepository.findById(replyId).orElseThrow();
         comment.putReply(request);
     }
 
     @Override
     @Transactional
-    public void patchArticleStar(Long articleId) {
+    public void incrementArticleStar(Long articleId) {
         Article article= articleRepository.findById(articleId).orElseThrow(IllegalArgumentException::new);
         article.plusStarCount();
     }
 
     @Override
     @Transactional
-    public void patchComment(Long commentId, CommentPatchReqDto request) {
+    public void modifyComment(Long commentId, CommentModifyReqDto request) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(IllegalArgumentException::new);
         comment.updateCommentByCommentPatchReqDto(request);
     }
 
     @Override
     @Transactional
-    public void patchArticleView(Long articleId) {
+    public void incrementArticleView(Long articleId) {
         Article article = articleRepository.findById(articleId).orElseThrow(IllegalArgumentException::new);
         article.plusViewCount();
     }

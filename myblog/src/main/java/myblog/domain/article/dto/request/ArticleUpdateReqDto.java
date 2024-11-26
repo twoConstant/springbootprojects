@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArticlePutReqDto {
+public class ArticleUpdateReqDto {
 
     @NotBlank(message = "Title can't blank")
     private String title;

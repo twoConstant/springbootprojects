@@ -1,38 +1,38 @@
 package myblog.domain.article.service;
 
-import myblog.domain.article.dto.request.ArticleCreReqDto;
-import myblog.domain.article.dto.request.ArticlePutReqDto;
-import myblog.domain.article.dto.response.ArticleDetailResDto;
+import myblog.domain.article.dto.request.ArticleAddReqDto;
+import myblog.domain.article.dto.request.ArticleUpdateReqDto;
+import myblog.domain.article.dto.response.ArticleResDto;
 import myblog.domain.article.dto.response.ArticleIdResDto;
-import myblog.domain.article.dto.response.ArticleSummaryResDto;
+import myblog.domain.article.dto.response.ArticleListResDto;
 import myblog.domain.comment.dto.request.*;
-import myblog.domain.comment.dto.response.CommentAtArticleResDto;
+import myblog.domain.comment.dto.response.CommentListAtArticleResDto;
 
 import java.util.List;
 
 public interface ArticleService {
 
-    List<ArticleSummaryResDto> getArticleSummary();
+    List<ArticleListResDto> findArticleList();
 
-    ArticleDetailResDto getArticleDetail(Long id);
+    ArticleResDto findArticleById(Long id);
 
-    List<CommentAtArticleResDto> getArticleComments(Long id);
+    List<CommentListAtArticleResDto> findCommentListByArticleId(Long id);
 
-    ArticleIdResDto postArticle(ArticleCreReqDto request);
+    ArticleIdResDto addArticle(ArticleAddReqDto request);
 
-    void putArticle(ArticlePutReqDto request, Long id);
+    void updateArticle(ArticleUpdateReqDto request, Long id);
 
-    void creComment(CommentCreReqDto request, Long articleId);
+    void addComment(CommentAddReqDto request, Long articleId);
 
-    void putComment(CommentPutReqDto request, Long commentId);
+    void updateComment(CommentUpdateReqDto request, Long commentId);
 
-    void creReply(ReplyCreReqDto request, Long commentId);
+    void addReply(ReplyAddReqDto request, Long commentId);
 
-    void putReply(ReplyPutReqDto request, Long replyId);
+    void updateReply(ReplyUpdateReqDto request, Long replyId);
 
-    void patchArticleStar(Long articleId);
+    void incrementArticleStar(Long articleId);
 
-    void patchComment(Long commentId, CommentPatchReqDto request);
+    void modifyComment(Long commentId, CommentModifyReqDto request);
 
-    void patchArticleView(Long articleId);
+    void incrementArticleView(Long articleId);
 }

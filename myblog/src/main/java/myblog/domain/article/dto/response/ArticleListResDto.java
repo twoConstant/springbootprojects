@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 @Setter
-public class ArticleSummaryResDto {
+public class ArticleListResDto {
 
     private Long id;
     private String title;
@@ -19,8 +19,8 @@ public class ArticleSummaryResDto {
     private Long viewCount;
     private Long starCount;
 
-    public static ArticleSummaryResDto toDto(Article article) {
-        return ArticleSummaryResDto
+    public static ArticleListResDto toDto(Article article) {
+        return ArticleListResDto
                 .builder()
                 .id(article.getId())
                 .title(article.getTitle())

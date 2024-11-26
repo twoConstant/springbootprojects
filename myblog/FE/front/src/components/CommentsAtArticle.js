@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getCommentsAtArticleResDto } from "../api/articles_api";
+import { getCommentListAtArticle } from "../api/articles_api";
 import "../styles.css";
-import { patchCommentPatchReqDto } from "../api/comment_api";
+import { patchComment } from "../api/comment_api";
 
 const CommentsAtArticle = ({ article_id }) => {
     const [comments, setComments] = useState([]);
@@ -11,7 +11,7 @@ const CommentsAtArticle = ({ article_id }) => {
 
     useEffect(() => {
         const fetchComments = async () => {
-            const commentAtArticleResDto = await getCommentsAtArticleResDto(article_id);
+            const commentAtArticleResDto = await getCommentListAtArticle(article_id);
             setComments(commentAtArticleResDto);
         };
 
@@ -34,7 +34,7 @@ const CommentsAtArticle = ({ article_id }) => {
     const handleSaveClick = async (comment_id) => {
         const previousComments = [...comments]; // 이전 상태 백업
         try {
-            await patchCommentPatchReqDto(article_id, comment_id, editedContent);
+            await patchComment(article_id, comment_id, editedContent);
 
             // 상태 업데이트
             setComments((prevComments) =>

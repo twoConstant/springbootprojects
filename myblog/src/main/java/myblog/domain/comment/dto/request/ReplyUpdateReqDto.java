@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReplyPutReqDto {
+public class ReplyUpdateReqDto {
 
     @NotBlank
     private String writer;

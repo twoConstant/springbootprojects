@@ -1,5 +1,5 @@
 
-class CommentPatchReqDto {
+class CommentModifyReqDto {
 
     content = ""; // 초기값 설정
 
@@ -8,4 +8,4 @@ class CommentPatchReqDto {
     }
 }
 
-export default CommentPatchReqDto;
+export default CommentModifyReqDto;
