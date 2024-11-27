@@ -12,6 +12,10 @@ import myblog.domain.comment.dto.request.*;
 import myblog.domain.comment.dto.response.CommentListAtArticleResDto;
 import myblog.domain.comment.entity.Comment;
 import myblog.domain.comment.repository.CommentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +34,16 @@ public class ArticleServiceV1 implements ArticleService {
     public List<ArticleListResDto> findArticleList() {
         return articleRepository.findAll()
                 .stream().map(ArticleListResDto::toDto).toList();
+    }
+
+    @Override
+    public Page<ArticleResDto> findArticlePage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<Article> articlePage = articleRepository.findAll(pageable);
+        if(articlePage.isEmpty()) {
+            throw new IllegalArgumentException("no page with your request");
+        }
+        return articlePage.map(ArticleResDto::toDto);
     }
 
     @Override
@@ -135,6 +149,8 @@ public class ArticleServiceV1 implements ArticleService {
         Article article = articleRepository.findById(articleId).orElseThrow(IllegalArgumentException::new);
         article.plusViewCount();
     }
+
+
 
 }
 

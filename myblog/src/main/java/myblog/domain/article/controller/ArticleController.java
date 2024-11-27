@@ -10,6 +10,7 @@ import myblog.domain.article.dto.response.ArticleResDto;
 import myblog.domain.article.service.ArticleService;
 import myblog.domain.comment.dto.request.*;
 import myblog.domain.comment.dto.response.CommentListAtArticleResDto;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,18 @@ public class ArticleController {
 
     private final ArticleService articleService;
 
+//    @GetMapping()
+//    public ResponseEntity<List<ArticleListResDto>> articleList() {
+//        List<ArticleListResDto> response = articleService.findArticleList();
+//        return ResponseEntity.ok(response);
+//    }
+
     @GetMapping()
-    public ResponseEntity<List<ArticleListResDto>> articleList() {
-        List<ArticleListResDto> response = articleService.findArticleList();
+    public ResponseEntity<Page<ArticleResDto>> articlePage(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        Page<ArticleResDto> response = articleService.findArticlePage(page, size);
         return ResponseEntity.ok(response);
     }
 

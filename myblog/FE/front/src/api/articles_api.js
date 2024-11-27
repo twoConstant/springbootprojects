@@ -2,10 +2,10 @@ import CommentAtArticleResDto from "../dto/article/response/CommentAtArticleResD
 import axiosInstance from "./axiosInstance"
 
 // 게시글 전체 목록 조회
-export const getArticleList = async() => {
-    console.log("in getArticleList");
+export const getArticlePage = async(page, size) => {
+    console.log("in getArticlePage");
     try {
-        const response = await axiosInstance.get("/articles");
+        const response = await axiosInstance.get(`/articles?page=${page}&size=${size}`);
         return response.data;
     } catch (error) {
         console.log("error");

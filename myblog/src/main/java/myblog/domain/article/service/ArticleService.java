@@ -7,6 +7,7 @@ import myblog.domain.article.dto.response.ArticleIdResDto;
 import myblog.domain.article.dto.response.ArticleListResDto;
 import myblog.domain.comment.dto.request.*;
 import myblog.domain.comment.dto.response.CommentListAtArticleResDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -35,4 +36,6 @@ public interface ArticleService {
     void modifyComment(Long commentId, CommentModifyReqDto request);
 
     void incrementArticleView(Long articleId);
+
+    Page<ArticleResDto> findArticlePage(int page, int size);
 }

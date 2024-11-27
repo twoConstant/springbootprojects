@@ -1,0 +1,28 @@
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.article-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.pagination {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.pagination button {
+    padding: 5px 10px;
+}
+
+.pagination .active {
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    border: none;
+}
