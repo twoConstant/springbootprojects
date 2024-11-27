@@ -1,5 +1,7 @@
 package myblog.domain.article.entity;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
 import lombok.*;
 import myblog.domain.article.dto.request.ArticleUpdateReqDto;

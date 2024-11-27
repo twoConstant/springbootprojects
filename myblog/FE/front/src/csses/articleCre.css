@@ -1,0 +1,79 @@
+/* 공통 컨테이너 스타일 */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa; /* 밝은 회색 배경으로, 전체 페이지의 일관된 톤 유지 */
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* 제목 스타일 */
+h1 {
+    text-align: center;
+    color: #333; /* 어두운 회색으로 가독성 높임 */
+    margin-bottom: 20px;
+}
+
+/* 입력 라벨 스타일 */
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+    color: #495057; /* 다소 어두운 색상으로 시각적 강조 */
+}
+
+/* 텍스트 입력 필드 스타일 */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box; /* 박스 너비 계산 방식 통일 */
+    font-size: 1rem;
+    background-color: #fff;
+}
+
+/* 버튼 스타일 */
+button {
+    background-color: #007bff; /* 기본 버튼 색상 */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    margin-right: 10px; /* 버튼 간격 조정 */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3; /* 버튼 호버 시 색상 변경 */
+}
+
+/* 퀼 에디터 컨테이너 스타일 */
+.quill-container {
+    margin-bottom: 20px;
+    background: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+/* 퀼 에디터 텍스트 영역 */
+.ql-editor {
+    min-height: 200px; /* 최소 높이 설정 */
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #343a40; /* 기본 글자색 설정 */
+}
+
+/* 에러 메시지 스타일 */
+.error-message {
+    color: #e74c3c; /* 빨간색으로 에러 강조 */
+    margin-bottom: 15px;
+    font-weight: bold;
+}

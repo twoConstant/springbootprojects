@@ -6,6 +6,7 @@ import ArticleDetail from './components/ArticleDetail';
 import ArticleEdit from './components/ArticleEdit';
 import ArticleCre from './components/ArticleCre';
 import CommentCre from './components/CommentCre';
+import QuillEditor from './components/QuillEditor';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/articles/:article_id/edit" element={<ArticleEdit />} />
         <Route path="/articles/create" element={<ArticleCre />} />
         <Route path="/articles/:article_id/comment-cre" element={<CommentCre />} />
+        <Route path="/practices/quill" element={<QuillEditor />} />
       </Routes>
     </Router>
   )
