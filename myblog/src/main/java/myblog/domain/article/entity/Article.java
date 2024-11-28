@@ -28,8 +28,8 @@ public class Article {
     @Column(name = "title", nullable = false, length = 100)
     private String title;
 
-    @Lob    // text 자료형
-    @Column(name = "content", nullable = false)
+    @Lob
+    @Column(name = "content", nullable = false, columnDefinition = "MEDIUMTEXT")
     private String content;
 
     @Column(name = "password", nullable = false)
