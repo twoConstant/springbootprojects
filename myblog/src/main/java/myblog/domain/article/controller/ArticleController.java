@@ -123,7 +123,8 @@ public class ArticleController {
     public ResponseEntity<HttpStatus> articleStarIncrement(
             @PathVariable Long articleId
     ) {
-        articleService.incrementArticleStar(articleId);
+//        articleService.incrementArticleStar(articleId);
+        articleService.bufferedIncrementArticleStar(articleId);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
 
     }

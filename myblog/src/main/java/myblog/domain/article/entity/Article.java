@@ -94,4 +94,11 @@ public class Article {
         this.starCount++;
     }
 
+    public void setStarCount(long starCount) {
+        this.starCount = starCount; // 명확히 덮어쓰기
+    }
+
+    public void addToStarCount(long increment) {
+        this.starCount += increment; // 값 추가
+    }
 }
