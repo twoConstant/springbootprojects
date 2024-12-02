@@ -14,6 +14,8 @@
 
 - node.js
 
+- Quill : RichText Editor
+
 ### BackEnd
 
 - SpringBoot
@@ -24,6 +26,7 @@
 
 - ObjectMapper
 
+- Ehcache : local cache
 
 
 ### DataBase
