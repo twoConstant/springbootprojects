@@ -33,8 +33,6 @@ public interface ArticleService {
 
     void incrementArticleStar(Long articleId);
 
-    void bufferedIncrementArticleStar(Long articleId);
-
     void modifyComment(Long commentId, CommentModifyReqDto request);
 
     void incrementArticleView(Long articleId);

@@ -40,7 +40,6 @@ public class ArticleServiceV1 implements ArticleService {
     private final ConcurrentMap<Long, Long> starCountBuffer = new ConcurrentHashMap<>();
 
     @Override
-    @Cacheable(value = "articleList", key = "'allArticles'")
     public List<ArticleListResDto> findArticleList() {
         System.out.println("Fetching article list from database...");
         return articleRepository.findAllWithUsers()
@@ -48,7 +47,6 @@ public class ArticleServiceV1 implements ArticleService {
     }
 
     @Override
-    @Cacheable(value = "articlePages", key = "#page + '-' + #size")
     public Page<ArticleResDto> findArticlePage(int page, int size) {
         log.info("findArticlePage from DB");
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
@@ -61,7 +59,6 @@ public class ArticleServiceV1 implements ArticleService {
 
     @Override
     @Transactional
-    @Cacheable(value = "articles", key = "#id")
     public ArticleResDto findArticleById(Long id) {
         log.info("findArticleById from DB");
         Article article = articleRepository.findById(id).orElseThrow();
@@ -69,7 +66,6 @@ public class ArticleServiceV1 implements ArticleService {
     }
 
     @Override
-    @Cacheable(value = "commentsAtArticle", key = "#id")
     //FIXME JPQL로 수정
     public List<CommentListAtArticleResDto> findCommentListByArticleId(Long id) {
         log.info("findCommentListByArticleId from DB");
@@ -152,46 +148,6 @@ public class ArticleServiceV1 implements ArticleService {
         log.info("incrementArticleStar from DB");
         Article article= articleRepository.findById(articleId).orElseThrow(IllegalArgumentException::new);
         article.plusStarCount();
-    }
-
-    @Override
-    @Transactional
-    public void bufferedIncrementArticleStar(Long articleId) {
-        log.info("Start bufferedIncrementArticleStar");
-
-        // 캐시 업데이트
-        Cache cache = cacheManager.getCache("articles");
-        if (cache != null) {
-            ArticleResDto cachedArticle = cache.get(articleId, ArticleResDto.class);
-            if (cachedArticle != null) {
-                cachedArticle.setStarCount(cachedArticle.getStarCount() + 1); // 캐시의 추천 수 증가
-                cache.put(articleId, cachedArticle); // 캐시에 업데이트된 값 저장
-            }
-        }
-
-        // 쓰기 지연 버퍼에 추천 수 누적
-        starCountBuffer.merge(articleId, 1L, Long::sum);
-
-        // 버퍼 값이 10 이상이면 DB 업데이트
-        if (starCountBuffer.get(articleId) >= 10) {
-            flushBufferedStarCountToDatabase(articleId);
-        }
-    }
-
-
-
-    private void flushBufferedStarCountToDatabase(Long articleId) {
-        Long starsToAdd = starCountBuffer.remove(articleId); // 버퍼에서 값 가져오기
-        if (starsToAdd != null && starsToAdd > 0) {
-            Article article = articleRepository.findById(articleId)
-                    .orElseThrow(() -> new IllegalArgumentException("Article Not Found"));
-
-            log.info("Flushing buffered stars to DB. Current DB stars: {}, starsToAdd: {}", article.getStarCount(), starsToAdd);
-
-            // DB 값 업데이트
-            article.addToStarCount(starsToAdd);
-            articleRepository.save(article);
-        }
     }
 
 

@@ -15,7 +15,10 @@ public class CacheConfig {
 
     @Bean
     public CacheManager cacheManager() throws Exception {
+        // 인터페이스 제공 객체 생성
         CachingProvider cachingProvider = Caching.getCachingProvider();
+
+        // 인터페이스에 사용할 구현체 주입 => 원하는 구현체를 갈아끼는 부분
         javax.cache.CacheManager jCacheManager = cachingProvider.getCacheManager(
                 getClass().getResource("/ehcache.xml").toURI(),
                 getClass().getClassLoader()
