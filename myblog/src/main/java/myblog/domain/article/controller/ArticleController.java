@@ -29,7 +29,7 @@ public class ArticleController {
     @GetMapping()
     public ResponseEntity<Page<ArticleResDto>> articlePage(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size
+            @RequestParam(value = "size", defaultValue = "5") int size
     ) {
         Page<ArticleResDto> response = articleService.findArticlePage(page, size);
         return ResponseEntity.ok(response);

@@ -16,6 +16,7 @@ import myblog.domain.comment.repository.CommentRepository;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,12 +33,11 @@ import java.util.concurrent.ConcurrentMap;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Primary
 public class ArticleServiceV1 implements ArticleService {
 
     private final ArticleRepository articleRepository;
     private final CommentRepository commentRepository;
-    private final CacheManager cacheManager;
-    private final ConcurrentMap<Long, Long> starCountBuffer = new ConcurrentHashMap<>();
 
     @Override
     public List<ArticleListResDto> findArticleList() {
@@ -47,8 +47,10 @@ public class ArticleServiceV1 implements ArticleService {
     }
 
     @Override
+    @Transactional
     public Page<ArticleResDto> findArticlePage(int page, int size) {
         log.info("findArticlePage from DB");
+        log.info("page = {}, size = {}", page, size);
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<Article> articlePage = articleRepository.findAll(pageable);
         if(articlePage.isEmpty()) {
@@ -66,6 +68,7 @@ public class ArticleServiceV1 implements ArticleService {
     }
 
     @Override
+    @Transactional
     //FIXME JPQL로 수정
     public List<CommentListAtArticleResDto> findCommentListByArticleId(Long id) {
         log.info("findCommentListByArticleId from DB");

@@ -1,3 +1,4 @@
+import ArticleDetailResDto from "../dto/article/response/ArticleDetailResDto";
 import CommentAtArticleResDto from "../dto/article/response/CommentAtArticleResDto";
 import axiosInstance from "./axiosInstance"
 
@@ -14,8 +15,26 @@ export const getArticlePage = async(page, size) => {
 
 // 단일 게시글 조회 요청
 export const getArticle = async(article_id) => {
-    const response = await axiosInstance.get(`/articles/${article_id}`);
-    return response.data;
+    console.log("call getArticle");
+    try {
+        const response = await axiosInstance.get(`/articles/${article_id}`);
+        console.log(response.data);
+        const data = response.data;
+        const articleDetailResDto = new ArticleDetailResDto(
+            data.id,
+            data.title,
+            data.content,
+            data.writer,
+            data.createdAt,
+            data.viewCount,
+            data.starCount
+        );
+        console.log("ArticleDetailResDto: " + data);        
+        return articleDetailResDto;
+    } catch(e) {
+        console.log(e);
+    }
+    
 }
 
 // 게시글 생성 요청

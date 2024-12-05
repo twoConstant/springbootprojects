@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 5000
   servlet:
     context-path: /api
 
@@ -37,6 +37,7 @@ spring:
     username: root
     password : "0000"
     driver-class-name: com.mysql.cj.jdbc.Driver
+
 
 
   springdoc:

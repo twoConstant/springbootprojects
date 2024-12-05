@@ -35,7 +35,7 @@ import java.util.concurrent.ConcurrentMap;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Primary
+//@Primary
 public class ArticleServiceV2 implements ArticleService{
 
     private final ArticleRepository articleRepository;
@@ -59,6 +59,7 @@ public class ArticleServiceV2 implements ArticleService{
 
     @Override
     @Cacheable(value = "commentsAtArticle", key = "#id")
+    @Transactional
     public List<CommentListAtArticleResDto> findCommentListByArticleId(Long id) {
         log.info("findCommentListByArticleId from DB");
         List<CommentListAtArticleResDto> response = new ArrayList<>();

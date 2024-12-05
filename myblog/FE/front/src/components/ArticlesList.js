@@ -18,7 +18,7 @@ const ArticleList = () => {
         const fetchArticles = async () => {
             setIsLoading(true);
             try {
-                const data = await getArticlePage(currentPage, pageSize);
+                const data = await getArticlePage(currentPage - 1, pageSize);
                 setArticles(data.content);
                 setTotalPages(data.totalPages);
             } catch (error) {
